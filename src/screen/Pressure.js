@@ -98,8 +98,7 @@ export default function Pressure() {
         }
 
         if (noti2) {
-            console.log(status)
-            // checkNotification(status)
+            checkNotification(status)
         }
     }
 
