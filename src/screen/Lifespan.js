@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 
 import { db } from '../util/config';
-let itemsRef = db.ref('/Tread');
+let itemsRef = db.ref('/Tread'); //get from table tread
 
 
 export default class Lifespan extends Component {
@@ -17,6 +17,7 @@ export default class Lifespan extends Component {
         };
     }
 
+    //Any function in componentDidMount will be run first
     componentDidMount() {
         itemsRef.once('value', snapshot => {
             let data = snapshot.val();
@@ -41,11 +42,12 @@ export default class Lifespan extends Component {
         this.returnReadNow();
     }
 
+    //Function to controll the timer
     performTimeConsumingTask = async () => {
         return new Promise((resolve) =>
             setTimeout(
                 () => { resolve('result') },
-                5000
+                5000 //5 sec
             )
         )
     }
@@ -96,7 +98,7 @@ export default class Lifespan extends Component {
     }
 
     async returNewTire(val) {
-        const data = await this.performTimeConsumingTask();
+        const data = await this.performTimeConsumingTask(); //timer
         if (data !== null) {
             itemsRef.once('value', snapshot => {
                 let data = snapshot.val();
@@ -137,6 +139,8 @@ export default class Lifespan extends Component {
             );
         }
         // if (this.state.tireNo) {
+
+        //User Interface start
         return (
             <SafeAreaView style={{ height: '100%' }}>
                 <ScrollView showsVerticalScrollIndicator={false}>

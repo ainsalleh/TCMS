@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { createSwitchNavigator } from 'react-navigation';
 import { createAppContainer } from 'react-navigation';
+
 import SplashScreen from './Splash';
 import PressureScreen from './Pressure';
 import LifeSpanScreen from './Lifespan';
@@ -44,6 +45,7 @@ function PressureStackScreen({ navigation }) {
                         fontWeight: 'bold',
                     },
                     headerRight: () => (
+                        //gi dekat setting.js 
                         <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => navigation.navigate('Setting')}>
                             <Fontawesome name='cog' color={'white'} size={30} ></Fontawesome>
                         </TouchableOpacity>
@@ -170,7 +172,7 @@ function App() {
 }
 
 
-
+//First function call
 const AppsNavigator = createAppContainer(createSwitchNavigator(
     {
         SplashScreen: SplashScreen,

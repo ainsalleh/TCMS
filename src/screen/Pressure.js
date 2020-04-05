@@ -15,11 +15,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import Modal from 'react-native-modalbox';
 
 import { db } from '../util/config';
-let itemsRef = db.ref('/Tires');
-let itemsRefWorkshop = db.ref('/Workshop');
-// let itemsRefSetting = db.ref('/Setting');
+let itemsRef = db.ref('/Tires'); //get from table tires
+let itemsRefWorkshop = db.ref('/Workshop'); //get from table workshop
 
 export default function Pressure() {
+    //Declare value into variable
     const [loading, setLoading] = useState(true);
     const [type, setType] = useState("");
     const [max, setMax] = useState("");
@@ -30,40 +30,21 @@ export default function Pressure() {
     const [dataWorkshop, setDataWorkshop] = useState(null);
     const [load, setLoad] = useState(false);
 
-
+    //To first & re-run the function
     useFocusEffect(
         React.useCallback(() => {
-            // const fetchAsyncStorage = async () => {
-            //     setLoading(true);
-            //     try {
-            //         const type2 = await AsyncStorage.getItem("type");
-            //         const max2 = await AsyncStorage.getItem("max");
-            //         const min2 = await AsyncStorage.getItem("min");
-            //         const noti2 = await AsyncStorage.getItem("notification");
-            //         // console.log(max2 + " " + min2 + " " + noti2)
-            //         // setType(type2);
-            //         // setMax(max2);
-            //         // setMin(min2);
-            //         // setNoti(JSON.parse(noti2));
-            //         // setLoading(false);
-            //         // checkPressure(max2, min2);
-
-            //     } catch (e) {
-            //         console.log(e);
-            //     }
-            // };
 
             const fetchData2 = async () => {
                 setLoading(true);
-                let type2 = await AsyncStorage.getItem("type");
-                let max2 = await AsyncStorage.getItem("max");
-                let min2 = await AsyncStorage.getItem("min");
-                let noti2 = await AsyncStorage.getItem("notification");
-                setType(type2);
+                let type2 = await AsyncStorage.getItem("type"); //eg. sedan
+                let max2 = await AsyncStorage.getItem("max"); //eg. 241
+                let min2 = await AsyncStorage.getItem("min"); //eg.206
+                let noti2 = await AsyncStorage.getItem("notification"); //eg. (true/false)
+                setType(type2); //Set value type
                 itemsRef.on('value', snapshot => {
                     let data = snapshot.val();
                     let items = Object.values(data);
-                    setDatas(items);
+                    setDatas(items); //set value
                     setLoading(false);
                     checkPressure(max2, min2, items[0], noti2);
                 });
@@ -72,8 +53,8 @@ export default function Pressure() {
         }, [])
     );
 
-
-    useEffect(() => {
+    //First time run workshop
+    useEffect(() => { 
         itemsRefWorkshop.on('value', snapshot => {
             let data = snapshot.val();
             let items = Object.values(data);
@@ -186,6 +167,7 @@ export default function Pressure() {
     }
 
     if (load) {
+        //User interface start
         return (
             <View style={styles.MainContainer}>
                 <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>Type of Car : {type ? type : '-'}</Text>
@@ -203,10 +185,12 @@ export default function Pressure() {
                     numColumns={2}
                     keyExtractor={item => item.tireNo}
                 />
-                <TouchableOpacity activeOpacity={.7} onPress={() => shareBtn()}
+                
+                <TouchableOpacity activeOpacity={.7} onPress={() => shareBtn()} //Share button
                     style={{ position: 'absolute', right: 0, bottom: 0, padding: 20 }}>
                     <Fontawesome name='share-alt' size={40} ></Fontawesome>
                 </TouchableOpacity>
+
                 <Modal
                     style={[styles.modal, styles.modal3]}
                     position={'center'}
@@ -261,6 +245,7 @@ export default function Pressure() {
 
             </View>
         )
+          //User interface end
     }
 
     return null;
