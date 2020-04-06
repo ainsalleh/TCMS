@@ -37,7 +37,7 @@ export default class Lifespan extends Component {
             refreshing: true
         })
         db.ref('/Tread/Tire' + val).update({
-            Button: 1,
+            Button: 1, //enabling ultrasonic sensor 
         });
         this.returnReadNow();
     }
@@ -54,7 +54,7 @@ export default class Lifespan extends Component {
 
     async returnReadNow() {
 
-        const data = await this.performTimeConsumingTask();
+        const data = await this.performTimeConsumingTask(); //to make code in order
         if (data !== null) {
             if (this.state.thenVal != 0) {
                 itemsRef.once('value', snapshot => {
@@ -116,7 +116,7 @@ export default class Lifespan extends Component {
 
                 this.setState({
                     tireNo: items[0].tireNo,
-                    thenVal: items[0].TireTread.toFixed(1),
+                    thenVal: items[0].TireTread.toFixed(1), //1 d.p.
                     nowVal: items[0].TireTread.toFixed(1),
                     predictLifeSpan: lifeSpan.toFixed(1),
                     refreshing: false
